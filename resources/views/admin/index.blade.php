@@ -26,8 +26,7 @@
             height: 100vh;
             position: fixed;
             top: 56px; /* height of the navbar */
-            width: 250px;
-            background-color: #f8f9fa;
+            width: 235px;
             padding-top: 20px;
             overflow-y: auto;
         }
@@ -43,7 +42,8 @@
             color: #fff;
         }
         .main-content {
-            margin-left: 200px;
+            background-color: #f8f9fa;
+            margin-left: 250px;
             padding: 20px;
             padding-top: 76px; /* height of the navbar + extra padding */
             flex: 1;
@@ -63,8 +63,18 @@
         <strong>TrueCoffee Dashboard</strong>
     </a>
     <div class="user-profile">
-        <img src="user.png" alt="User" width="30" class="rounded-circle">
-        <span>Người dùng</span>
+        <div class="dropdown show">
+            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Người dùng
+                <img src="{{ asset('pictures/person.png') }}" alt="User" width="30" class="rounded-circle">
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Tai khoan</a>
+                <a class="dropdown-item" href="#">Tong quan</a>
+                <a class="dropdown-item" href="#">Thoát</a>
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -73,19 +83,29 @@
         <img src="{{ asset('pictures/dashboard.png') }}" width="20" height="20" alt="">
         Trung tâm điều khiển
     </a>
-    <a href="#">Sản phẩm</a>
-    <a href="#">Người dùng</a>
-    <a href="#">Hóa đơn</a>
+    <a href="#">
+        <img src="{{ asset('pictures/product.png') }}" width="20" height="20" alt="">
+        Sản phẩm
+    </a>
+    <a href="#">
+        <img src="{{ asset('pictures/User.png') }}" width="20" height="20" alt="">
+        Người dùng
+    </a>
+    <a href="#">
+        <img src="{{ asset('pictures/Payroll.png') }}" width="20" height="20" alt="">
+        Hóa đơn
+    </a>
 </div>
 
 <div class="main-content">
-    <div class="container mt-4">
+    <div class="container mt-4" style="margin: 0">
         <div class="row">
             <div class="col-md-4">
-                <div class="card bg-warning text-white mb-4">
+                <div class="card text-dark mb-4" style="background-color: #FFF2DC">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
+                                <img src="{{ asset('pictures/Job Oppening.png') }}" width="20" height="20" alt="">
                                 <h2>23</h2>
                                 <p>Sản phẩm</p>
                             </div>
@@ -97,10 +117,11 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card bg-danger text-white mb-4">
+                <div class="card text-dark mb-4" style="background-color: #FFEEF1">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
+                                <img src="{{ asset('pictures/Total Employees.png') }}" width="20" height="20" alt="">
                                 <h2>1259</h2>
                                 <p>Người dùng</p>
                             </div>
