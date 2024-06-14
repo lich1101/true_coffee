@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Bill;
+use App\Http\Requests\StoreBillRequest;
+use App\Http\Requests\UpdateBillRequest;
 
-class CartController extends Controller
+class BillController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +21,13 @@ class CartController extends Controller
      */
     public function create()
     {
-        return view('cart.add');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBillRequest $request)
     {
         //
     }
@@ -33,7 +35,7 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Bill $bill)
     {
         //
     }
@@ -41,7 +43,7 @@ class CartController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Bill $bill)
     {
         //
     }
@@ -49,7 +51,7 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBillRequest $request, Bill $bill)
     {
         //
     }
@@ -57,7 +59,7 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Bill $bill)
     {
         //
     }
