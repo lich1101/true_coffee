@@ -19,7 +19,7 @@ class CartController extends Controller
      */
     public function create()
     {
-        return view('cart.index');
+        return view('cart.add');
     }
 
     /**
