@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('storage/logo/logo.jpg') }}" type="image/x-icon">
     <title>True Coffee</title>
-    <link rel="stylesheet" href="{{ asset('cart/cart_list.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cart_list.css') }}">
 </head>
 
 <body>
@@ -109,7 +109,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('cart/cart_list.js') }}"></script>
+    <script src="{{ asset('js/cart_list.js') }}"></script>
 </body>
 
 </html>

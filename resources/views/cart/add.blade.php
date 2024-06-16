@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>True Coffee </title>
     <link rel="shortcut icon" href="{{ asset('storage/logo/logo.jpg') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('cart/cart_add.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cart_add.css') }}">
 </head>
 
 <body>
@@ -58,7 +58,7 @@
             <button class="add-to-cart">Thêm vào giỏ hàng</button>
         </div>
     </div>
-    <script src="{{ asset('cart/cart_add.js') }}"></script>
+    <script src="{{ asset('js/cart_add.js') }}"></script>
 </body>
 
 </html>
