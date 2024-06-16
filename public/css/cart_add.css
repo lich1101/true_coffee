@@ -111,27 +111,32 @@ body {
 
 .quantity {
     margin: 20px 0;
+    display: flex;
 }
 
 .quantity label {
     font-weight: bold;
     margin-right: 10px;
 }
-
-.quantity button {
-    padding: 5px 10px;
-    margin: 0 5px;
+.cust_quan{
     cursor: pointer;
     border: 1px solid #ccc;
     background-color: #ffffff;
     border-radius: 5px;
 }
+.cust_quan button {
+   
+    cursor: pointer;
+    border: none;
+    background-color: #ffffff;
+    
+}
 
-.quantity input {
-    width: 40px;
+.cust_quan input {
+    width: 30px;
     text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px  solid #ccc;
+   
 }
 
 .notes {
@@ -144,7 +149,8 @@ body {
 }
 
 .notes input {
-    width: 100%;
+    margin-left: 12px;
+    width: 50%;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -162,4 +168,38 @@ body {
 
 .add-to-cart:hover {
     background-color: #c48e5c;
+}
+
+.cart-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #d4af37;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon_cart_fa{
+    
+    color: #ffffff;
+}
+
+.cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
 }
