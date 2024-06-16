@@ -7,6 +7,7 @@
     <title>True Coffee </title>
     <link rel="shortcut icon" href="{{ asset('storage/logo/logo.jpg') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/cart_add.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
 <body>
@@ -45,11 +46,15 @@
                     <button class="option-button">L</button>
                 </div>
             </div>
+
             <div class="quantity">
                 <label>Số lượng:</label>
-                <button id="decrease">-</button>
-                <input type="text" id="quantity" value="1">
-                <button id="increase">+</button>
+                <div class="cust_quan">
+                    <button id="decrease">-</button>
+                    <input type="text" id="quantity" value="1">
+                    <button id="increase">+</button>
+                </div>
+
             </div>
             <div class="notes">
                 <label>Ghi chú:</label>
@@ -57,6 +62,12 @@
             </div>
             <button class="add-to-cart">Thêm vào giỏ hàng</button>
         </div>
+    </div>
+    <div class="cart-icon">
+        <p class="icon_cart_fa">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </p>
+        <div class="cart-count">1</div>
     </div>
     <script src="{{ asset('js/cart_add.js') }}"></script>
 </body>

@@ -11,9 +11,9 @@
 
 <body>
     <div class="cart-container">
-        <header>
-            <h2><a href="#">True Coffee</a> &gt; Giỏ hàng</h2>
-        </header>
+        <div class="breadcrumb">
+            <a href="#">True Coffee</a> > Giỏ hàng
+        </div>
         <table class="cart-table">
             <thead>
                 <tr>
