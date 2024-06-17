@@ -26,57 +26,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="product">
-                        <img src="cafe-den.jpg" alt="Cafe đen">
-                        <span>Cafe đen</span>
-                    </td>
-                    <td><button class="option-button">Tùy chọn &#x25BC</button></td>
-                    <td><span class="price">35 000 vnđ</span></td>
-                    <td>
-                        <div class="quantity-control">
-                            <button class="decrease">-</button>
-                            <input type="text" value="1" readonly>
-                            <button class="increase">+</button>
-                        </div>
-                    </td>
-                    <td><input type="checkbox"></td>
-                    <td><button class="delete-button">xóa</button></td>
-                </tr>
-                <tr>
-                    <td class="product">
-                        <img src="bac-xiu.jpg" alt="Bạc xỉu">
-                        <span>Bạc xỉu</span>
-                    </td>
-                    <td><button class="option-button">Tùy chọn &#x25BC;</button></td>
-                    <td><span class="price">30 000 vnđ</span></td>
-                    <td>
-                        <div class="quantity-control">
-                            <button class="decrease">-</button>
-                            <input type="text" value="1" readonly>
-                            <button class="increase">+</button>
-                        </div>
-                    </td>
-                    <td><input type="checkbox"></td>
-                    <td><button class="delete-button">xóa</button></td>
-                </tr>
-                <tr>
-                    <td class="product">
-                        <img src="cafe-muoi.jpg" alt="Cafe muối">
-                        <span>Cafe muối</span>
-                    </td>
-                    <td><button class="option-button">Tùy chọn &#x25BC;</button></td>
-                    <td><span class="price">30 000 vnđ</span></td>
-                    <td>
-                        <div class="quantity-control">
-                            <button class="decrease">-</button>
-                            <input type="text" value="2" readonly>
-                            <button class="increase">+</button>
-                        </div>
-                    </td>
-                    <td><input type="checkbox"></td>
-                    <td><button class="delete-button">xóa</button></td>
-                </tr>
+
+                @foreach ($cart_items as $cart_item)
+                    <tr>
+                        <td class="product">
+                            <img src="{{ asset('storage/' . $cart_item->image) }}" alt="Cafe đen">
+                            <span>Cafe đen</span>
+                        </td>
+                        <td><button class="option-button">Tùy chọn &#x25BC</button></td>
+                        <td><span class="price">{{ $cart_item->price }} vnđ</span></td>
+                        <td>
+                            <div class="quantity-control">
+                                <button class="decrease">-</button>
+                                <input type="text" value="{{ $cart_item->quantity }}" readonly>
+                                <button class="increase">+</button>
+                            </div>
+                        </td>
+                        <td><input type="checkbox"></td>
+                        <td><button class="delete-button">xóa</button></td>
+                    </tr>
+                @endforeach
+
+
             </tbody>
         </table>
         <div class="cart-footer">
