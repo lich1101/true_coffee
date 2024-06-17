@@ -22,7 +22,6 @@
                 <img src="https://via.placeholder.com/50x50" alt="Thumbnail 2">
                 <img src="https://via.placeholder.com/50x50" alt="Thumbnail 3">
                 <img src="https://via.placeholder.com/50x50" alt="Thumbnail 4">
-                <img src="https://via.placeholder.com/50x50" alt="Thumbnail 5">
             </div>
         </div>
         <div class="product-details">
