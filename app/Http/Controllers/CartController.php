@@ -111,5 +111,14 @@ class CartController extends Controller
     public function destroy(string $id)
     {
         //
+         // Tìm mục trong giỏ hàng theo ID và xóa nó
+         $cartItem = Cart_item::find($id);
+         if ($cartItem) {
+             $cartItem->delete();
+             return response()->json(['success' => true]);
+         }
+ 
+         return response()->json(['success' => false, 'message' => 'Item not found'], 404);
+     
     }
 }

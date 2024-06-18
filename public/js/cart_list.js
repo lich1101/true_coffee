@@ -28,12 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.textContent = 'Tùy chọn ▼';
 
                 // Thêm sự kiện click vào document để đóng modal khi click ngoài
-                // document.addEventListener('click', (event) => {
-                //     if (!modal.contains(event.target) && event.target !== button) {
-                //         modal.style.display = 'none';
-                //         button.textContent = 'Tùy chọn ▶';
-                //     }
-                // }, { once: true });
+                document.addEventListener('click', (event) => {
+                    if (!modal.contains(event.target) && event.target !== button) {
+                        modal.style.display = 'none';
+                        button.textContent = 'Tùy chọn ▶';
+                    }
+                }, { once: true });
             }
         });
     });
@@ -59,14 +59,39 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTotalPrice();
         });
     });
+// delete item
+
+
 
     // Delete item
     const deleteButtons = document.querySelectorAll('.delete-button');
     deleteButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const row = event.target.closest('tr');
-            row.remove();
-            updateTotalPrice();
+            const cartItemId = button.dataset.cartItemId; // Lấy cart_item_id từ hàng (row)
+
+            const confirmDelete = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+            if (!confirmDelete) {
+                return; // Không xóa nếu người dùng không xác nhận
+            }
+            // Gửi yêu cầu xóa bằng AJAX
+            fetch(`/cart/${cartItemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    row.remove();
+                    updateTotalPrice();
+                   
+                } else {
+                    alert('Xóa sản phẩm không thành công');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         });
     });
 
@@ -82,12 +107,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // Delete all selected items
     const deleteAllButton = document.querySelector('.delete-all-button');
     deleteAllButton.addEventListener('click', () => {
+        const confirmDelete = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+        if (!confirmDelete) {
+            return; // Không xóa nếu người dùng không xác nhận
+        }
         const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]:checked');
         checkboxes.forEach(checkbox => {
             const row = checkbox.closest('tr');
-            row.remove();
+            const cartItemId = row.dataset.cartItemId; // Lấy cart_item_id từ hàng (row)
+          
+            // Gửi yêu cầu xóa bằng AJAX cho mỗi sản phẩm được chọn
+            fetch(`/cart/${cartItemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    row.remove();
+                    updateTotalPrice();
+                } else {
+                    alert('Xóa sản phẩm không thành công');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         });
-        updateTotalPrice();
     });
 
     // Checkout button
@@ -97,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Handle size change
-    document.querySelectorAll('.option-group input[name="option3"]').forEach(radio => {
+    document.querySelectorAll('.option-group input[name^="option3-"]').forEach(radio => {
         radio.addEventListener('change', (event) => {
             const productId = event.target.closest('.modal').dataset.productId;
             const priceElement = document.querySelector(`.option-button[data-product-id="${productId}"]`).closest('tr').querySelector('.price');
