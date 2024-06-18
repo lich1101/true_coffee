@@ -1,34 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('optionsModal');
-    const closeBtn = document.querySelector('.close');
     const optionButtons = document.querySelectorAll('.option-button');
-    const quantityControls = document.querySelectorAll('.quantity-control');
-    const deleteButtons = document.querySelectorAll('.delete-button');
-    const selectAllCheckbox = document.querySelector('.cart-footer input[type="checkbox"]');
-    const deleteAllButton = document.querySelector('.delete-all-button');
-    const checkoutButton = document.querySelector('.checkout-button');
-    const totalPriceElement = document.querySelector('.total-price');
 
-    // Open modal on option button click
     optionButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            modal.style.display = 'block';
+        button.addEventListener('click', (event) => {
+            event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
+
+            const productId = button.dataset.productId;
+            const modalId = `optionsModal-${productId}`;
+            const modal = document.querySelector(`#${modalId}`);
+
+            // Nếu modal hiện tại đang mở, đóng nó và đặt lại biểu tượng
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+                button.textContent = 'Tùy chọn ▶';
+            } else {
+                // Tắt tất cả các modal khác và đặt lại biểu tượng nút "Tùy chọn"
+                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+                optionButtons.forEach(btn => btn.textContent = 'Tùy chọn ▶');
+
+                // Đặt vị trí của modal ngay dưới nút tùy chọn
+                const rect = button.getBoundingClientRect();
+                modal.style.top = `${rect.bottom + window.scrollY}px`;
+                modal.style.left = `${rect.left + window.scrollX}px`;
+
+                // Hiển thị modal và thay đổi biểu tượng nút
+                modal.style.display = 'block';
+                button.textContent = 'Tùy chọn ▼';
+              
+            }
         });
     });
 
-    // Close modal when close button is clicked
-    closeBtn.onclick = () => {
-        modal.style.display = 'none';
-    };
-
-    // Close modal when clicking outside of the modal
-    window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
-
     // Quantity control
+    const quantityControls = document.querySelectorAll('.quantity-control');
     quantityControls.forEach(control => {
         const decreaseButton = control.querySelector('.decrease');
         const increaseButton = control.querySelector('.increase');
@@ -48,17 +52,44 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTotalPrice();
         });
     });
+// delete item
+
+
 
     // Delete item
+    const deleteButtons = document.querySelectorAll('.delete-button');
     deleteButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const row = event.target.closest('tr');
-            row.remove();
-            updateTotalPrice();
+            const cartItemId = button.dataset.cartItemId; // Lấy cart_item_id từ hàng (row)
+
+            const confirmDelete = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+            if (!confirmDelete) {
+                return; // Không xóa nếu người dùng không xác nhận
+            }
+            // Gửi yêu cầu xóa bằng AJAX
+            fetch(`/cart/${cartItemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    row.remove();
+                    updateTotalPrice();
+                   
+                } else {
+                    alert('Xóa sản phẩm không thành công');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         });
     });
 
     // Select all items
+    const selectAllCheckbox = document.querySelector('.cart-footer input[type="checkbox"]');
     selectAllCheckbox.addEventListener('change', (event) => {
         const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
@@ -67,31 +98,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Delete all selected items
+    const deleteAllButton = document.querySelector('.delete-all-button');
     deleteAllButton.addEventListener('click', () => {
+        const confirmDelete = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+        if (!confirmDelete) {
+            return; // Không xóa nếu người dùng không xác nhận
+        }
         const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]:checked');
         checkboxes.forEach(checkbox => {
             const row = checkbox.closest('tr');
-            row.remove();
+            const cartItemId = row.dataset.cartItemId; // Lấy cart_item_id từ hàng (row)
+          
+            // Gửi yêu cầu xóa bằng AJAX cho mỗi sản phẩm được chọn
+            fetch(`/cart/${cartItemId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    row.remove();
+                    updateTotalPrice();
+                } else {
+                    alert('Xóa sản phẩm không thành công');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         });
-        updateTotalPrice();
     });
 
     // Checkout button
+    const checkoutButton = document.querySelector('.checkout-button');
     checkoutButton.addEventListener('click', () => {
         alert('Thanh toán thành công!');
     });
 
+    // Handle size change
+    
     // Update total price
     function updateTotalPrice() {
-        let totalPrice = 0;
+        let totalPrices = 0;
         const rows = document.querySelectorAll('tbody tr');
         rows.forEach(row => {
             const priceElement = row.querySelector('.price');
-            const price = parseInt(priceElement.textContent.replace(' vnđ', '').replace(' ', ''));
-            const quantity = parseInt(row.querySelector('.quantity-control input').value);
-            totalPrice += price * quantity;
+            let price = parseInt(priceElement.textContent.replace(' vnđ', '').replace(' ', ''));
+
+            const quantityInput = row.querySelector('.quantity-control input');
+            let quantity = parseInt(quantityInput.value);
+
+            totalPrices += price * quantity;
         });
-        totalPriceElement.textContent = `${totalPrice.toLocaleString()} vnđ`;
+        const totalPriceElement = document.querySelector('.total-price');
+        totalPriceElement.textContent = `${totalPrices.toLocaleString()} vnđ`;
     }
 
     // Initial total price calculation

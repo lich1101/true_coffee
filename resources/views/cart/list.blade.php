@@ -7,13 +7,29 @@
     <link rel="shortcut icon" href="{{ asset('storage/logo/logo.jpg') }}" type="image/x-icon">
     <title>True Coffee</title>
     <link rel="stylesheet" href="{{ asset('css/cart_list.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
 <body>
-    <div class="cart-container">
-        <div class="breadcrumb">
-            <a href="#">True Coffee</a> > Giỏ hàng
+
+    <div class="header">
+        <div class="logo">
+            <a href="#">
+                <img src="{{ asset('storage/logo/logo.jpg') }}" alt="True Coffee Logo">
+                <h3>True Coffee</h3>
+            </a>
         </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Tìm kiếm sản phẩm...">
+            <button type="button"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+    <div class="breadcrumb">
+        <a href="#">True Coffee</a> > Giỏ hàng
+    </div>
+    <div class="cart-container">
+
         <table class="cart-table">
             <thead>
                 <tr>
@@ -26,58 +42,77 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="product">
-                        <img src="cafe-den.jpg" alt="Cafe đen">
-                        <span>Cafe đen</span>
-                    </td>
-                    <td><button class="option-button">Tùy chọn &#x25BC</button></td>
-                    <td><span class="price">35 000 vnđ</span></td>
-                    <td>
-                        <div class="quantity-control">
-                            <button class="decrease">-</button>
-                            <input type="text" value="1" readonly>
-                            <button class="increase">+</button>
-                        </div>
-                    </td>
-                    <td><input type="checkbox"></td>
-                    <td><button class="delete-button">xóa</button></td>
-                </tr>
-                <tr>
-                    <td class="product">
-                        <img src="bac-xiu.jpg" alt="Bạc xỉu">
-                        <span>Bạc xỉu</span>
-                    </td>
-                    <td><button class="option-button">Tùy chọn &#x25BC;</button></td>
-                    <td><span class="price">30 000 vnđ</span></td>
-                    <td>
-                        <div class="quantity-control">
-                            <button class="decrease">-</button>
-                            <input type="text" value="1" readonly>
-                            <button class="increase">+</button>
-                        </div>
-                    </td>
-                    <td><input type="checkbox"></td>
-                    <td><button class="delete-button">xóa</button></td>
-                </tr>
-                <tr>
-                    <td class="product">
-                        <img src="cafe-muoi.jpg" alt="Cafe muối">
-                        <span>Cafe muối</span>
-                    </td>
-                    <td><button class="option-button">Tùy chọn &#x25BC;</button></td>
-                    <td><span class="price">30 000 vnđ</span></td>
-                    <td>
-                        <div class="quantity-control">
-                            <button class="decrease">-</button>
-                            <input type="text" value="2" readonly>
-                            <button class="increase">+</button>
-                        </div>
-                    </td>
-                    <td><input type="checkbox"></td>
-                    <td><button class="delete-button">xóa</button></td>
-                </tr>
+                @foreach ($cart_items as $cart_item)
+                    <tr data-cart-item-id="{{ $cart_item->id }}">
+                        <td class="product">
+                            <img src="{{ asset('storage/' . $cart_item->image) }}" alt="Cafe đen">
+                            <span>{{ $cart_item->name }}</span>
+                        </td>
+                        <td>
+                            <button class="option-button" data-product-id="{{ $cart_item->id }}">Tùy chọn ▶</button>
+
+                            <!-- Modal cho sản phẩm hiện tại -->
+                            <div class="modal" id="optionsModal-{{ $cart_item->id }}"
+                                data-product-id="{{ $cart_item->id }}">
+                                <div class="modal-content">
+                                    <div class="option-group">
+                                        <span>Đá:</span>
+                                        <input type="radio" id="ice-it-{{ $cart_item->id }}"
+                                            name="option1-{{ $cart_item->id }}" value="0"
+                                            {{ $cart_item->option1 == 0 ? 'checked' : '' }}>
+                                        <label for="ice-it-{{ $cart_item->id }}">ít</label>
+                                        <input type="radio" id="ice-nhieu-{{ $cart_item->id }}"
+                                            name="option1-{{ $cart_item->id }}" value="1"
+                                            {{ $cart_item->option1 == 1 ? 'checked' : '' }}>
+                                        <label for="ice-nhieu-{{ $cart_item->id }}">nhiều</label>
+                                    </div>
+                                    <div class="option-group">
+                                        <span>Đường:</span>
+                                        <input type="radio" id="sugar-it-{{ $cart_item->id }}"
+                                            name="option2-{{ $cart_item->id }}" value="0"
+                                            {{ $cart_item->option2 == 0 ? 'checked' : '' }}>
+                                        <label for="sugar-it-{{ $cart_item->id }}">ít</label>
+                                        <input type="radio" id="sugar-nhieu-{{ $cart_item->id }}"
+                                            name="option2-{{ $cart_item->id }}" value="1"
+                                            {{ $cart_item->option2 == 1 ? 'checked' : '' }}>
+                                        <label for="sugar-nhieu-{{ $cart_item->id }}">nhiều</label>
+                                    </div>
+                                    <div class="option-group">
+                                        <span>Size:</span>
+                                        <input type="radio" id="size-m-{{ $cart_item->id }}"
+                                            name="option3-{{ $cart_item->id }}" value="0"
+                                            {{ $cart_item->option3 == 0 ? 'checked' : '' }}>
+                                        <label for="size-m-{{ $cart_item->id }}">M</label>
+                                        <input type="radio" id="size-l-{{ $cart_item->id }}"
+                                            name="option3-{{ $cart_item->id }}" value="1"
+                                            {{ $cart_item->option3 == 1 ? 'checked' : '' }}>
+                                        <label for="size-l-{{ $cart_item->id }}">L</label>
+                                    </div>
+                                    <div class="option-group">
+                                        <span>Ghi chú:</span>
+                                        <input type="text" value="{{ $cart_item->notes }}">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        {{-- <td><span class="price">{{ $cart_item->price }} vnđ</span></td> --}}
+                        <td><span class="price" data-base-price="{{ $cart_item->price }}">{{ $cart_item->price }}
+                                vnđ</span></td>
+
+                        <td>
+                            <div class="quantity-control">
+                                <button class="decrease">-</button>
+                                <input type="text" value="{{ $cart_item->quantity }}" readonly>
+                                <button class="increase">+</button>
+                            </div>
+                        </td>
+                        <td><input type="checkbox"></td>
+                        <td><button class="delete-button" data-cart-item-id="{{ $cart_item->id }}">xóa</button></td>
+                    </tr>
+                @endforeach
             </tbody>
+
         </table>
         <div class="cart-footer">
             <label><input type="checkbox"> Chọn tất cả</label>
@@ -85,30 +120,8 @@
             <span>Tổng số tiền: <span class="total-price">0 vnđ</span></span>
             <button class="checkout-button">Thanh toán</button>
         </div>
-    </div>
 
-    <div class="modal" id="optionsModal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Tùy chọn</h2>
-            <div class="option-group">
-                <span>Đá:</span>
-                <button class="option-button">ít</button>
-                <button class="option-button">nhiều</button>
-            </div>
-            <div class="option-group">
-                <span>Đường:</span>
-                <button class="option-button">ít</button>
-                <button class="option-button">nhiều</button>
-            </div>
-            <div class="option-group">
-                <span>Size:</span>
-                <button class="option-button selected" data-price="0">M</button>
-                <button class="option-button" data-price="5000">L</button>
-            </div>
-        </div>
     </div>
-
     <script src="{{ asset('js/cart_list.js') }}"></script>
 </body>
 
