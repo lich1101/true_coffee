@@ -12,27 +12,28 @@
 
 <body>
     {{-- @dd($product) --}}
-    @if (isset($errors) && $errors->any())
-        <div id="error-popup" class="popup">
-            <div class="popup-content">
-                <span class="close-btn" onclick="closePopup()">&times;</span>
-                <ul>
-                    @foreach ($errors->messages() as $error)
-                        <li>
-                            {{ $error[0] }}
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+
+    <div class="header">
+        <div class="logo">
+            <a href="#">
+                <img src="{{ asset('storage/logo/logo.jpg') }}" alt="True Coffee Logo">
+                <h3>True Coffee</h3>
+            </a>
         </div>
-    @endif
-    <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+        <div class="search-bar">
+            <input type="text" placeholder="Tìm kiếm sản phẩm...">
+            <button type="button"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+
+    <form id="add-to-cart-form" enctype="multipart/form-data">
         @csrf
 
         <div class="breadcrumb">
             <a href="#">True Coffee</a> > <a href="#">sản phẩm</a> > {{ $product->name }}
         </div>
         <div class="product-container">
+
             <div class="product-image">
                 <img src="{{ asset('storage/' . $product->image) }}" alt="Cafe đen">
                 <div class="thumbnail-images"></div>
@@ -43,8 +44,9 @@
                 <h1>{{ $product->name }}</h1>
                 <p class="price">{{ $product->price }} vnđ</p>
                 <input type="hidden" name="price" value="{{ $product->price }}">
+                <label class="op">Tùy chọn:</label>
                 <div class="options">
-                    <label>Tùy chọn:</label>
+
                     <div class="option-group">
                         <span>Đá:</span>
                         <input type="radio" id="ice-it" name="option1" value="0">
@@ -119,6 +121,24 @@
                     toastr.danger('{{ session()->get('error') }}')
                 }
             @endif
+
+            $('#add-to-cart-form').on('submit', function(e) {
+                e.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
+
+                $.ajax({
+                    url: '{{ route('cart.store') }}', // Địa chỉ API để gửi yêu cầu
+                    method: 'POST',
+                    data: $(this).serialize(), // Lấy tất cả dữ liệu từ form
+                    success: function(response) {
+                        toastr.success('Đã thêm sản phẩm vào giỏ hàng!');
+                        // Cập nhật số lượng giỏ hàng nếu cần
+                        $('.cart-count').text(response.cartCount);
+                    },
+                    error: function(xhr) {
+                        toastr.info('Các tuỳ chọn còn thiếu, vui lòng nhập lại.');
+                    }
+                });
+            });
         });
     </script>
 

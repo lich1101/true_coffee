@@ -42,6 +42,7 @@ class CartController extends Controller
     {
         //
         // Cart::create();
+       
 
         $cart_id = 1; // Đây là ID của giỏ hàng, cần thay đổi phù hợp với logic của bạn
         // $product_price = Product::find($cart_item->product_id);
@@ -75,8 +76,10 @@ class CartController extends Controller
                 'notes' => $cart_item->notes,
             ]);
         }
-
-        return redirect()->back()->with('success','Thêm thành công');
+        
+        $cart_count = Cart_item::where('cart_id', $cart_id);
+        $cartCount = $cart_count->count();
+        return response()->json(['success' => true,'cartCount' => $cartCount]);
 
 
     }

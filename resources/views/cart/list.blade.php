@@ -8,14 +8,28 @@
     <title>True Coffee</title>
     <link rel="stylesheet" href="{{ asset('css/cart_list.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 
 <body>
-    <div class="cart-container">
-        <div class="breadcrumb">
-            <a href="#">True Coffee</a> > Giỏ hàng
+
+    <div class="header">
+        <div class="logo">
+            <a href="#">
+                <img src="{{ asset('storage/logo/logo.jpg') }}" alt="True Coffee Logo">
+                <h3>True Coffee</h3>
+            </a>
         </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Tìm kiếm sản phẩm...">
+            <button type="button"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+    <div class="breadcrumb">
+        <a href="#">True Coffee</a> > Giỏ hàng
+    </div>
+    <div class="cart-container">
+
         <table class="cart-table">
             <thead>
                 <tr>
@@ -36,6 +50,7 @@
                         </td>
                         <td>
                             <button class="option-button" data-product-id="{{ $cart_item->id }}">Tùy chọn ▶</button>
+
                             <!-- Modal cho sản phẩm hiện tại -->
                             <div class="modal" id="optionsModal-{{ $cart_item->id }}"
                                 data-product-id="{{ $cart_item->id }}">
@@ -72,6 +87,11 @@
                                             name="option3-{{ $cart_item->id }}" value="1"
                                             {{ $cart_item->option3 == 1 ? 'checked' : '' }}>
                                         <label for="size-l-{{ $cart_item->id }}">L</label>
+                                    </div>
+                                    <div class="option-group">
+                                        <span>Ghi chú:</span>
+                                        <input type="text" value="{{ $cart_item->notes }}">
+
                                     </div>
                                 </div>
                             </div>

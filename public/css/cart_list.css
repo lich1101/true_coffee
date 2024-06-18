@@ -4,6 +4,54 @@ body {
     margin: 0;
     padding: 0;
 }
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#ffffff ;
+    padding: 10px 20px;
+}
+.header .logo {
+    width:48% ;
+    }
+
+.header .logo img {
+    height: 70px;
+}
+.header .logo a {
+    text-decoration: none;
+    color: #ad7d1b;
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    font-size: 25px;
+}
+.header .logo a h3{
+    margin: 5px;
+}
+.header .search-bar {
+    display: flex;
+    flex: 1;
+    margin: 0 20px;
+    width: 52%;
+}
+
+.header .search-bar input[type="text"] {
+    width:90%;
+    padding: 10px;
+    border: 2px solid #ad7d1b;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.header .search-bar button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ad7d1b;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+}
 
 .cart-container {
     width: 80%;
@@ -16,12 +64,12 @@ body {
 
 .breadcrumb {
     padding: 10px 20px;
-    background-color: #f0f0f0;
+    background-color: #f5f5f5;
     font-size: 14px;
 }
 
 .breadcrumb a {
-    color: #007bff;
+    color: #075fbe;
     text-decoration: none;
 }
 
@@ -44,6 +92,10 @@ body {
 .product {
     display: flex;
     align-items: center;
+}
+
+.note{
+    color: #000;
 }
 
 .product img {

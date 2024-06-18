@@ -26,14 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Hiển thị modal và thay đổi biểu tượng nút
                 modal.style.display = 'block';
                 button.textContent = 'Tùy chọn ▼';
-
-                // Thêm sự kiện click vào document để đóng modal khi click ngoài
-                document.addEventListener('click', (event) => {
-                    if (!modal.contains(event.target) && event.target !== button) {
-                        modal.style.display = 'none';
-                        button.textContent = 'Tùy chọn ▶';
-                    }
-                }, { once: true });
+              
             }
         });
     });
@@ -143,20 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Handle size change
-    document.querySelectorAll('.option-group input[name^="option3-"]').forEach(radio => {
-        radio.addEventListener('change', (event) => {
-            const productId = event.target.closest('.modal').dataset.productId;
-            const priceElement = document.querySelector(`.option-button[data-product-id="${productId}"]`).closest('tr').querySelector('.price');
-            const basePrice = parseInt(priceElement.dataset.basePrice);
-            if (event.target.value == '1') { // Size L
-                priceElement.textContent = `${(basePrice + 5000).toLocaleString()} vnđ`;
-            } else { // Size M
-                priceElement.textContent = `${basePrice.toLocaleString()} vnđ`;
-            }
-            updateTotalPrice();
-        });
-    });
-
+    
     // Update total price
     function updateTotalPrice() {
         let totalPrices = 0;
