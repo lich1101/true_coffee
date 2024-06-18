@@ -90,7 +90,7 @@
         <p class="icon_cart_fa">
             <i class="fa-solid fa-cart-shopping"></i>
         </p>
-        <div class="cart-count">1</div>
+        <div class="cart-count">{{ $cartCount }}</div>
     </div>
     <script src="{{ asset('js/cart_add.js') }}"></script>
     <script>

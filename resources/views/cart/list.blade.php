@@ -7,6 +7,8 @@
     <link rel="shortcut icon" href="{{ asset('storage/logo/logo.jpg') }}" type="image/x-icon">
     <title>True Coffee</title>
     <link rel="stylesheet" href="{{ asset('css/cart_list.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body>
@@ -27,7 +29,7 @@
             </thead>
             <tbody>
                 @foreach ($cart_items as $cart_item)
-                    <tr>
+                    <tr data-cart-item-id="{{ $cart_item->id }}">
                         <td class="product">
                             <img src="{{ asset('storage/' . $cart_item->image) }}" alt="Cafe đen">
                             <span>{{ $cart_item->name }}</span>
@@ -86,7 +88,7 @@
                             </div>
                         </td>
                         <td><input type="checkbox"></td>
-                        <td><button class="delete-button">xóa</button></td>
+                        <td><button class="delete-button" data-cart-item-id="{{ $cart_item->id }}">xóa</button></td>
                     </tr>
                 @endforeach
             </tbody>

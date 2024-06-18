@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const increaseButton = document.getElementById('increase');
     const quantityInput = document.getElementById('quantity');
     const addToCartButton = document.querySelector('.add-to-cart');
-    const cartCount = document.querySelector('.cart-count');
+    // const cartCount = document.querySelector('.cart-count');
 
     decreaseButton.addEventListener('click', function() {
         let currentValue = parseInt(quantityInput.value);
