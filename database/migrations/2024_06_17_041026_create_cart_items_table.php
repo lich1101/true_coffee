@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('option2');
             $table->string('option3');
             $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 10,0);
             $table->text('notes')->nullable();
             $table->timestamps();
         });
