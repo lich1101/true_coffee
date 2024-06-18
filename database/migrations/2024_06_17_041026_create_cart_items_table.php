@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('option3');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
