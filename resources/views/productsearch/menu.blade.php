@@ -47,7 +47,6 @@
         <section class="cart">
             <h2>{{ 'Giỏ hàng của tôi' }}</h2>
             <p>Chưa có sản phẩm nào!</p>
-            <p>Giá tiền:</p>
             <button class="checkout-btn">Xem giỏ hàng</button>
         </section>
     </div>
