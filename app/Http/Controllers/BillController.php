@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bill;
 use App\Http\Requests\StoreBillRequest;
 use App\Http\Requests\UpdateBillRequest;
+use Illuminate\Support\Facades\DB;
 
 class BillController extends Controller
 {
@@ -13,7 +14,10 @@ class BillController extends Controller
      */
     public function index()
     {
-        //
+        $bills = Bill::query()->get();
+        return view('admin.bills.index', [
+            'bills' => $bills,
+        ]);
     }
 
     /**
@@ -35,17 +39,35 @@ class BillController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Bill $bill)
+    public function show($bill)
     {
-        //
+        $billInfo = DB::table('bills')
+            ->join('bill_details', 'bills.id', '=', 'bill_details.bill_id')
+            ->join('products', 'bill_details.product_id', '=', 'products.id')
+            ->where('bill_id', $bill)
+            ->select('bills.id', 'bills.created_at', 'products.name', 'bill_details.quantity', 'products.price', 'bills.total_amount')
+            ->first();
+            return view('admin.bills.show', [
+                'bill' => $billInfo,
+            ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Bill $bill)
+    public function edit($id)
     {
-        //
+
+        $bill = Bill::query()->findOrFail($id);
+        $billInfo = DB::table('bills')
+            ->join('bill_details', 'bills.id', '=', 'bill_details.bill_id')
+            ->join('products', 'bill_details.product_id', '=', 'products.id')
+            ->where('bill_id', $bill)
+            ->select('bills.id', 'bills.created_at', 'products.name', 'bill_details.quantity', 'products.price', 'bills.total_amount')
+            ->first();
+        return view('admin.bills.edit', [
+            'bill' => $bill,
+        ]);
     }
 
     /**
@@ -53,7 +75,6 @@ class BillController extends Controller
      */
     public function update(UpdateBillRequest $request, Bill $bill)
     {
-        //
     }
 
     /**
