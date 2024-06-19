@@ -25,7 +25,22 @@ document.getElementById('searchBox').addEventListener('input', function() {
         }
     });
 
-    // if (!hasResults && searchQuery) {
-    //     alert('Không tìm thấy sản phẩm phù hợp'); // Hiển thị thông báo nếu không có kết quả
-    // }
+    if (!hasResults && searchQuery) {
+        alert('Không tìm thấy sản phẩm phù hợp'); // Hiển thị thông báo nếu không có kết quả
+    }
 });
+document.getElementById('clearCartBtn').addEventListener('click', function() {
+    const cartContent = document.getElementById('cartContent');
+    cartContent.innerHTML = 'Chưa có sản phẩm nào!';
+    cartCount = 0; // Đặt số lượng sản phẩm về 0
+    updateCartCountDisplay(); // Cập nhật hiển thị số lượng sản phẩm
+});
+
+// Hàm cập nhật hiển thị số lượng sản phẩm trong giỏ hàng
+function updateCartCountDisplay() {
+    // Giả sử bạn có một phần tử để hiển thị số lượng sản phẩm trong giỏ hàng
+    const cartCountElement = document.getElementById('cartCount');
+    if (cartCountElement) {
+        cartCountElement.textContent = cartCount;
+    }
+}

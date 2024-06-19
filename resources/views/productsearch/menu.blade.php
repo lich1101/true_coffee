@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ 'True Coffee' }}</title>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="shortcut icon" href="{{ asset('storage/logo/logo.jpg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('css/cart_add.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="logo">{{ 'True Coffee' }}</div>
+        
+        <div class="logo"><img src="{{ asset('storage/logo/logo.jpg') }}" alt="True Coffee Logo"></div>
         <input type="search" id="searchBox" placeholder="Tìm kiếm sản phẩm">
         <button class="login-btn">Đăng nhập</button>
     </header>
@@ -18,6 +22,10 @@
                 @php
                     $categories = [
                         "Món nổi bật",
+                        "Đồ uống nóng",
+                        "Đồ uống lạnh",
+                        "Trà pha",
+                        "Đồ ăn kèm",
                     ];
                 @endphp
                 @foreach ($categories as $category)
@@ -30,9 +38,9 @@
             <section class="featured" id="productList">
                 @php
                     $products = [
-                        ["image" => "hazelnut_macchiato.jpg", "name" => "Hazelnut Macchiato"],
-                        ["image" => "ristretto_bianco.jpg", "name" => "Ristretto Bianco"],
-                        ["image" => "cafe_latte.jpg", "name" => "Café Latte"]
+                        ["image" => "public/pictures/Screenshot 2024-06-05 165646.png", "name" => "Hazelnut Macchiato"],
+                        ["image" => "public/pictures/Screenshot 2024-06-05 170143.png", "name" => "Ristretto Bianco"],
+                        ["image" => "public/pictures/Screenshot 2024-06-05 170554.png", "name" => "Café Latte"]
                     ];
                 @endphp
                 @foreach ($products as $product)
@@ -45,9 +53,10 @@
             </section>
         </main>
         <section class="cart">
-            <h2>{{ 'Giỏ hàng của tôi' }}</h2>
-            <p>Chưa có sản phẩm nào!</p>
-            <button class="checkout-btn">Xem giỏ hàng</button>
+            <h2>Giỏ hàng của tôi <span id="clearCartBtn" class="clear-cart-btn">Xóa tất cả</span></h2>
+            <p id="cartContent">Chưa có sản phẩm nào!</p>
+            <p>Giá tiền:</p>
+            <button class="checkout-btn">Thanh toán</button>
         </section>
     </div>
     <script src="{{ asset('js/script.js') }}"></script>

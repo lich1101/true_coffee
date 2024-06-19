@@ -16,16 +16,19 @@ header {
 
 .logo {
     font-size: 24px;
-    color: #d2691e;
+    color: #bb9b41;
 }
-
+button{
+    border-radius: 10px;
+}
 #searchBox {
     width: 300px;
     padding: 5px;
+    border-radius: 10px;
 }
 
 .login-btn {
-    background-color: #8b4513;
+    background-color: #bb9b41;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -89,7 +92,7 @@ main {
 }
 
 .featured button {
-    background-color: #8b4513;
+    background-color: #bb9b41;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -103,10 +106,31 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.cart h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.clear-cart-btn {
+    background-color: transparent;
+    color: #bb9b41;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#cartContent {
+    margin: 10px 0;
+}
+
 .checkout-btn {
-    background-color: #8b4513;
+    background-color: #bb9b41;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
 }
